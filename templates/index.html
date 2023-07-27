@@ -1,0 +1,31 @@
+<html>
+ <head>
+   <title>Flask Static Demo</title>
+   <link rel="stylesheet" href="/static/styles.css" />
+
+ </head>
+ <body>
+    <h1>{{message}}</h1>
+
+    <div id="content">
+      <div>
+        <table id="board" cellspacing="0" cellpadding="0">
+
+        </table>
+      </div>
+
+      <div id="data">
+        <p id="turno"></p>
+        <p id="comidas_blancas">Pieces eaten by player of Whites: 0</p>
+        <p id="comidas_negras">Pieces eaten by player of Blacks: 0</p>
+        <button onclick="restartGame()">Normal Mode</button>
+        <button onclick="partidaContrareloj()">Against the Clock Mode</button>
+        <p id="tiempo_blancas">Not an Against the Clock Game.</p>
+        <p id="tiempo_negras">Not an Against the Clock Game.</p>
+      </div>
+    </div>
+    
+
+   <script src="/static/funciones.js"></script>
+ </body>
+</html>
