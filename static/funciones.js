@@ -1,49 +1,49 @@
 const ROWS = 8;
 const COLUMNS = 8;
 
-let origen = null;
-let casillaSeleccionada = false;
-let destino = "";
-let comidasBlancas = 0;
-let comidasNegras = 0;
+let origin = null;
+let selectedRank = false;
+let destination = "";
+let eatenWhites = 0;
+let eatenBlacks = 0;
 let turno = "white";
-let tiempoBlancas = 600;
-let tiempoNegras = 600;
+let timeWhites = 600;
+let timeBlacks = 600;
 
-let timerBlancas = null;
-let timerNegras = null;
-let modo = null;
+let timerWhites = null;
+let timerBlacks = null;
+let mode = null;
 
-let tablero = [
-                [{pieza:"torre", color:"black", imagen:"torre_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"reina", color:"black", imagen:"reina_negro"}, {pieza:"rey", color:"black", imagen:"rey_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"torre", color:"black", imagen:"torre_negro"}],
-                [{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"}],
+let chessboard = [
+                [{piece:"torre", color:"black", image:"torre_negro"}, {piece:"caballo", color:"black", image:"caballo_negro"}, {piece:"alfil", color:"black", image:"alfil_negro"}, {piece:"reina", color:"black", image:"reina_negro"}, {piece:"rey", color:"black", image:"rey_negro"}, {piece:"alfil", color:"black", image:"alfil_negro"}, {piece:"caballo", color:"black", image:"caballo_negro"}, {piece:"torre", color:"black", image:"torre_negro"}],
+                [{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"}],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
-                [{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"}],
-                [{pieza:"torre", color:"white", imagen:"torre_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"reina", color:"white", imagen:"reina_blanco"}, {pieza:"rey", color:"white", imagen:"rey_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"torre", color:"white", imagen:"torre_blanco"}]
+                [{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"}],
+                [{piece:"torre", color:"white", image:"torre_blanco"}, {piece:"caballo", color:"white", image:"caballo_blanco"}, {piece:"alfil", color:"white", image:"alfil_blanco"}, {piece:"reina", color:"white", image:"reina_blanco"}, {piece:"rey", color:"white", image:"rey_blanco"}, {piece:"alfil", color:"white", image:"alfil_blanco"}, {piece:"caballo", color:"white", image:"caballo_blanco"}, {piece:"torre", color:"white", image:"torre_blanco"}]
               ];
 
 
 document.getElementById("turno").textContent = "TURN: " + turno.toUpperCase();
 
-function decrementarTiempoBlancas(){
-    tiempoBlancas--;
-    document.getElementById("tiempo_blancas").textContent = "Whites: " + tiempoBlancas + " seconds";
+function decreaseTimeWhites(){
+    timeWhites--;
+    document.getElementById("tiempo_blancas").textContent = "Whites: " + timeWhites + " seconds";
 
-    if (tiempoBlancas == 0){
+    if (timeWhites == 0){
         alert("Winner: Blacks");
         restartGame();
     }
 
 }
 
-function decrementarTiempoNegras(){
-    tiempoNegras--;
-    document.getElementById("tiempo_negras").textContent = "Blacks: "+ tiempoNegras + " seconds";
+function decreaseTimeBlacks(){
+    timeBlacks--;
+    document.getElementById("tiempo_negras").textContent = "Blacks: "+ timeBlacks + " seconds";
 
-    if (tiempoNegras == 0){
+    if (timeBlacks == 0){
         alert("Winner: Whites");
         restartGame();
     }
@@ -54,48 +54,48 @@ function decrementarTiempoNegras(){
 
 function partidaContrareloj(){
     restartGame();
-    modo = "contrareloj";
-    timerBlancas = setInterval(decrementarTiempoBlancas, 1000);
-    document.getElementById("tiempo_negras").textContent =  "Blacks: "+ tiempoNegras + " seconds";
-    document.getElementById("tiempo_blancas").textContent =  "Whites: "+ tiempoBlancas + " seconds";
+    mode = "contrareloj";
+    timerWhites = setInterval(decreaseTimeWhites, 1000);
+    document.getElementById("tiempo_negras").textContent =  "Blacks: "+ timeBlacks + " seconds";
+    document.getElementById("tiempo_blancas").textContent =  "Whites: "+ timeWhites + " seconds";
 
 }
 
 function restartGame(){
 
-    origen = null;
-    casillaSeleccionada = false;
-    destino = "";
-    comidasBlancas = 0;
-    comidasNegras = 0;
+    origin = null;
+    selectedRank = false;
+    destination = "";
+    eatenWhites = 0;
+    eatenBlacks = 0;
 
-    tiempoBlancas = 600;
-    tiempoNegras = 600;
+    timeWhites = 600;
+    timeBlacks = 600;
 
     turno = "white";
 
-    tablero = [
-        [{pieza:"torre", color:"black", imagen:"torre_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"reina", color:"black", imagen:"reina_negro"}, {pieza:"rey", color:"black", imagen:"rey_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"torre", color:"black", imagen:"torre_negro"}],
-                [{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"}],
+    chessboard = [
+        [{piece:"torre", color:"black", image:"torre_negro"}, {piece:"caballo", color:"black", image:"caballo_negro"}, {piece:"alfil", color:"black", image:"alfil_negro"}, {piece:"reina", color:"black", image:"reina_negro"}, {piece:"rey", color:"black", image:"rey_negro"}, {piece:"alfil", color:"black", image:"alfil_negro"}, {piece:"caballo", color:"black", image:"caballo_negro"}, {piece:"torre", color:"black", image:"torre_negro"}],
+                [{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"},{piece:"peon", color:"black", image:"peon_negro"}],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
-                [{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"}],
-                [{pieza:"torre", color:"white", imagen:"torre_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"reina", color:"white", imagen:"reina_blanco"}, {pieza:"rey", color:"white", imagen:"rey_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"torre", color:"white", imagen:"torre_blanco"}]
+                [{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"},{piece:"peon", color:"white", image:"peon_blanco"}],
+                [{piece:"torre", color:"white", image:"torre_blanco"}, {piece:"caballo", color:"white", image:"caballo_blanco"}, {piece:"alfil", color:"white", image:"alfil_blanco"}, {piece:"reina", color:"white", image:"reina_blanco"}, {piece:"rey", color:"white", image:"rey_blanco"}, {piece:"alfil", color:"white", image:"alfil_blanco"}, {piece:"caballo", color:"white", image:"caballo_blanco"}, {piece:"torre", color:"white", image:"torre_blanco"}]
               ];
 
       document.getElementById("turno").textContent = "TURN: " + turno.toUpperCase();
 
       //No es partida contrareloj
-      document.getElementById("tiempo_negras").textContent = "No es partida contrareloj";
-      document.getElementById("tiempo_blancas").textContent = "No es partida contrareloj";
+      document.getElementById("tiempo_negras").textContent = "Not an against the clock game";
+      document.getElementById("tiempo_blancas").textContent = "Not an against the clock game";
       
       createBoard();
 
-      modo = "normal";
-      clearInterval(timerNegras);
-      clearInterval(timerBlancas);
+      mode = "normal";
+      clearInterval(timerBlacks);
+      clearInterval(timerWhites);
 }
 
 
@@ -122,12 +122,12 @@ function createBoard(){
             
             newCell.className = color;
             
-            if (tablero[i][j] !== undefined &&tablero[i][j] !== null ){
-                newCell.style.backgroundImage = "url(\"/static/" + tablero[i][j].imagen + ".png\")";
+            if (chessboard[i][j] !== undefined &&chessboard[i][j] !== null ){
+                newCell.style.backgroundImage = "url(\"/static/" + chessboard[i][j].image + ".png\")";
                 newCell.style.backgroundSize = "100% auto"
             }
 
-            newCell.addEventListener("click", resaltarCasilla);
+            newCell.addEventListener("click", highlightRank);
             newCell.id = "casilla;" + i + ";" + j;
 
             if (color === "black" ){
@@ -146,33 +146,31 @@ function createBoard(){
 
 
 
-function resaltarCasilla(event){
-    let fila = parseInt(event.target.id.split(";")[1]);
-    let columna = parseInt(event.target.id.split(";")[2]);
+function highlightRank(event){
+    let row = parseInt(event.target.id.split(";")[1]);
+    let column = parseInt(event.target.id.split(";")[2]);
     
-    if (casillaSeleccionada == true && !hayPiezaMismoColor(fila, columna, turno)){
+    if (selectedRank == true && !pieceSameColor(row, column, turno)){
         console.log("movimiento");
 
-        if (hacerMovimiento(fila, columna)){
-            let casillaOrigen = document.getElementById(origen).classList.remove("casilla_resaltada");
+        if (makeMove(row, column)){
+            let originRank = document.getElementById(origin).classList.remove("casilla_resaltada");
             createBoard();
-            casillaSeleccionada = false;
+            selectedRank = false;
 
             if (turno == "white"){
                 turno = "black";
-                //temporizador black
-                if (modo == "contrareloj"){
-                    clearInterval(timerBlancas);
-                    //timerBlancas = setInterval(decrementarTiempoBlancas, 1000);
-                    timerNegras = setInterval(decrementarTiempoNegras, 1000);
+                //Timer for the blacks.
+                if (mode == "contrareloj"){
+                    clearInterval(timerWhites);
+                    timerBlacks = setInterval(decreaseTimeBlacks, 1000);
                 }
             }else{
                 turno = "white";
-                //temporizador white
-                if (modo == "contrareloj"){
-                    clearInterval(timerNegras);
-                    timerBlancas = setInterval(decrementarTiempoBlancas, 1000);
-                    //timerNegras = setInterval(decrementarTiempoNegras, 1000);
+                //Timer for the whites.
+                if (mode == "contrareloj"){
+                    clearInterval(timerBlacks);
+                    timerWhites = setInterval(decreaseTimeWhites, 1000);
                 }
             }
 
@@ -181,56 +179,52 @@ function resaltarCasilla(event){
         }
     }else{
         
-        if (hayPiezaMismoColor(fila, columna, turno)){
+        if (pieceSameColor(row, column, turno)){
             console.log("HAY PIEZA");
-            if (origen === event.target.id){
+            if (origin === event.target.id){
 
                 if (event.target.classList.length == 2){
                     event.target.classList.remove("casilla_resaltada");
-                    casillaSeleccionada = false;
+                    selectedRank = false;
         
                 }else{
                     event.target.classList.add("casilla_resaltada");
-                    casillaSeleccionada = true;
+                    selectedRank = true;
                 }
         
             }else{
-                let casillaOrigen = document.getElementById(origen);
-                //console.log(casillaOrigen);
-                if (casillaOrigen !== null){
-                    casillaOrigen.classList.remove("casilla_resaltada");
-                    casillaSeleccionada = false;
+                let originRank = document.getElementById(origin);
+
+                if (originRank !== null){
+                    originRank.classList.remove("casilla_resaltada");
+                    selectedRank = false;
                 }
         
                 event.target.classList.add("casilla_resaltada");
-                casillaSeleccionada = true;
+                selectedRank = true;
             }
         
-            origen = event.target.id;
+            origin = event.target.id;
             console.log("ficha seleccionada");
         }
         
     }    
 }
 
-function hayPieza(fila, columna){
+function pieceFound(row, column){
     
-    //console.log(fila);
-    //console.log(columna);
     
-    if (tablero[fila][columna] !== null){
+    if (chessboard[row][column] !== null){
         return true;
     }else{
         return false;
     }
 }
 
-function hayPiezaMismoColor(fila, columna, color){
+function pieceSameColor(row, column, color){
     
-    //console.log(fila);
-    //console.log(columna);
     
-    if (tablero[fila][columna] !== null && tablero[fila][columna].color == color){
+    if (chessboard[row][column] !== null && chessboard[row][column].color == color){
         return true;
     }else{
         return false;
@@ -238,294 +232,295 @@ function hayPiezaMismoColor(fila, columna, color){
 }
 
 
-function hacerMovimiento(filaDestino, columnaDestino){
-    let resultado = false;
-    let filaOrigen = parseInt(origen.split(";")[1]);
-    let columnaOrigen = parseInt(origen.split(";")[2]);
+function makeMove(rowDestination, columnDestination){
+    let result = false;
+    let rowOrigin = parseInt(origin.split(";")[1]);
+    let columnOrigin = parseInt(origin.split(";")[2]);
 
-    //Sacamos la pieza del origen
-    let pieza = tablero[filaOrigen][columnaOrigen];
+    //We select the piece at the origin position.
+    let piece = chessboard[rowOrigin][columnOrigin];
 
-    if (pieza.pieza === "peon"){
-        //reglas para el peon
+    if (piece.piece === "peon"){
+        //Rules for the pawn
         
-        if (pieza.color === "white"){
-            //Blanco
-            if (filaDestino == filaOrigen - 1){
-                resultado =  true;
-            }else if (filaDestino == filaOrigen - 1 && hayPiezaMismoColor(filaDestino, columnaDestino, "black") && (columnaDestino == columnaOrigen + 1 ||  columnaDestino == columnaOrigen - 1)){
-                resultado = true;
+        if (piece.color === "white"){
+            //White
+            if (rowDestination == rowOrigin - 1){
+                result =  true;
+            }else if (rowDestination == rowOrigin - 1 && pieceSameColor(rowDestination, columnDestination, "black") && (columnDestination == columnOrigin + 1 ||  columnDestination == columnOrigin - 1)){
+                result = true;
             }
         }else{
-            //Negro
-            if (filaDestino == filaOrigen + 1){
-                resultado =  true;
-            }else if (filaDestino == filaOrigen + 1 && hayPiezaMismoColor(filaDestino, columnaDestino, "white") && (columnaDestino == columnaOrigen + 1 ||  columnaDestino == columnaOrigen - 1)){
-                resultado = true;
+            //Black
+            if (rowDestination == rowOrigin + 1){
+                result =  true;
+            }else if (rowDestination == rowOrigin + 1 && pieceSameColor(rowDestination, columnDestination, "white") && (columnDestination == columnOrigin + 1 ||  columnDestination == columnOrigin - 1)){
+                result = true;
             }
         }
 
-    }else if (pieza.pieza === "caballo"){
-        //reglas para el caballo
-        console.log("Columna Origen:" + columnaOrigen);
-        console.log("Columna Destino:" + columnaDestino);
+    }else if (piece.piece === "caballo"){
+        //Rules for the knight
+        console.log("Columna Origen:" + columnOrigin);
+        console.log("Columna Destino:" + columnDestination);
 
-        if (filaDestino == filaOrigen + 2 || filaDestino == filaOrigen - 2){
+        if (rowDestination == rowOrigin + 2 || rowDestination == rowOrigin - 2){
             console.log("Movimiento correcto");
-            resultado = true;
+            result = true;
         }
-    }else if (pieza.pieza === "alfil"){
-        //reglas para el alfil
-        if (filaDestino > filaOrigen && columnaDestino > columnaOrigen){//Diagonal abajo derecha
-            resultado = comprobarDiagonalAbajoDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaDestino > filaOrigen && columnaDestino < columnaOrigen){//Diagonal abajo izquierda
-            resultado = comprobarDiagonalAbajoIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaDestino < filaOrigen && columnaDestino > columnaOrigen){//Diagonal arriba derecha
-           resultado = comprobarDiagonalArribaDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaDestino < filaOrigen && columnaDestino < columnaOrigen){//Diagonal arriba izquierda
-            resultado = comprobarDiagonalArribaIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
+    }else if (piece.piece === "alfil"){
+        //Rules for the bishop
+        if (rowDestination > rowOrigin && columnDestination > columnOrigin){//Diagonal down right
+            result = checkDiagonalDownRight(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowDestination > rowOrigin && columnDestination < columnOrigin){//Diagonal down left
+            result = checkDiagonalDownLeft(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowDestination < rowOrigin && columnDestination > columnOrigin){//Diagonal up right
+           result = checkDiagonalUpRight(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowDestination < rowOrigin && columnDestination < columnOrigin){//Diagonal up left
+            result = checkDiagonalUpLeft(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
         }
         
-    }else if (pieza.pieza === "torre"){
-        //Reglas para la torre 
+    }else if (piece.piece === "torre"){
+        //Rules for the rock 
        
-        if (filaOrigen == filaDestino && columnaDestino > columnaOrigen){ //fila derecha
-            resultado = comprobarFilaDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaOrigen == filaDestino && columnaDestino < columnaOrigen){//fila izquierda
-            resultado = comprobarFilaIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if(filaOrigen < filaDestino && columnaOrigen == columnaDestino){//columna abajo
-            resultado = comprobarColumnaAbajo(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaOrigen > filaDestino && columnaOrigen == columnaDestino){//columna arriba
-            resultado = comprobarColumnaArriba(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
+        if (rowOrigin == rowDestination && columnDestination > columnOrigin){ //Right row
+            result = checkRightRow(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowOrigin == rowDestination && columnDestination < columnOrigin){//Left row
+            result = checkLeftRow(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if(rowOrigin < rowDestination && columnOrigin == columnDestination){//Down column
+            result = checkDownColumn(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowOrigin > rowDestination && columnOrigin == columnDestination){//Upper Column
+            result = checkUpColumn(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
         }
 
 
-    }else if (pieza.pieza === "reina"){
-        //Reglas para la reina
-        //Movimientos Horizontales
+    }else if (piece.piece === "reina"){
+        //Rules for the queen
+        //MHorizontal Movements
         
-        if (filaOrigen == filaDestino && columnaDestino > columnaOrigen){//fila derecha
-            resultado = comprobarFilaDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaOrigen == filaDestino && columnaDestino < columnaOrigen){//fila izquierda
-            resultado = comprobarFilaIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if(filaOrigen < filaDestino && columnaOrigen == columnaDestino){//columna abajo
-            resultado = comprobarColumnaAbajo(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaOrigen > filaDestino && columnaOrigen == columnaDestino){//columna arriba
-            resultado = comprobarColumnaArriba(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
+        if (rowOrigin == rowDestination && columnDestination > columnOrigin){//row derecha
+            result = checkRightRow(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowOrigin == rowDestination && columnDestination < columnOrigin){//row izquierda
+            result = checkLeftRow(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if(rowOrigin < rowDestination && columnOrigin == columnDestination){//column abajo
+            result = checkDownColumn(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowOrigin > rowDestination && columnOrigin == columnDestination){//column arriba
+            result = checkUpColumn(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
         }
-        //Movimientos diaginales
-        else if (filaDestino > filaOrigen && columnaDestino > columnaOrigen){ //Diagonal abajo derecha
-            resultado = comprobarDiagonalAbajoDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaDestino > filaOrigen && columnaDestino < columnaOrigen){//Diagonal abajo izquierda
-            resultado = comprobarDiagonalAbajoIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaDestino < filaOrigen && columnaDestino > columnaOrigen){//Diagonal arriba derecha
-           resultado = comprobarDiagonalArribaDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
-        }else if (filaDestino < filaOrigen && columnaDestino < columnaOrigen){//Diagonal arriba izquierda
-            resultado = comprobarDiagonalArribaIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, pieza.color);
+        //Diagonal Movements
+
+        else if (rowDestination > rowOrigin && columnDestination > columnOrigin){ //Diagonal abajo derecha
+            result = checkDiagonalDownRight(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowDestination > rowOrigin && columnDestination < columnOrigin){//Diagonal abajo izquierda
+            result = checkDiagonalDownLeft(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowDestination < rowOrigin && columnDestination > columnOrigin){//Diagonal arriba derecha
+           result = checkDiagonalUpRight(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
+        }else if (rowDestination < rowOrigin && columnDestination < columnOrigin){//Diagonal arriba izquierda
+            result = checkDiagonalUpLeft(rowOrigin, columnOrigin, rowDestination, columnDestination, piece.color);
         }
 
-    }else if (pieza.pieza === "rey"){
-        if (filaDestino == filaOrigen + 1 && (columnaDestino == columnaOrigen) || (columnaDestino == columnaOrigen + 1) || (columnaDestino == columnaOrigen - 1)){
-            resultado = true;
-        }else if (filaDestino == filaOrigen + - 1 && (columnaDestino == columnaOrigen) || (columnaDestino == columnaOrigen + 1) || (columnaDestino == columnaOrigen - 1)){
-            resultado = true;
-        }else if (filaDestino == columnaDestino && ((columnaDestino == columnaOrigen + 1) || (columnaDestino == columnaOrigen - 1))){
-            resultado = true;
+    }else if (piece.piece === "rey"){
+        if (rowDestination == rowOrigin + 1 && (columnDestination == columnOrigin) || (columnDestination == columnOrigin + 1) || (columnDestination == columnOrigin - 1)){
+            result = true;
+        }else if (rowDestination == rowOrigin + - 1 && (columnDestination == columnOrigin) || (columnDestination == columnOrigin + 1) || (columnDestination == columnOrigin - 1)){
+            result = true;
+        }else if (rowDestination == columnDestination && ((columnDestination == columnOrigin + 1) || (columnDestination == columnOrigin - 1))){
+            result = true;
         }
     }
 
-    if (resultado){
+    if (result){
         console.log("Movimiento VALIDO");
 
-        if (tablero[filaDestino][columnaDestino] != null){
-            //Pieza comida
-            let piezaComida = tablero[filaDestino][columnaDestino];
-            console.log("Pieza comida");
-            console.log(piezaComida);
+        if (chessboard[rowDestination][columnDestination] != null){
+            //Piece eaten
+            let pieceEaten = chessboard[rowDestination][columnDestination];
+            console.log("Piece eaten");
+            console.log(pieceEaten);
 
             
             
             if (turno == "white"){
-                comidasBlancas++;
-                document.getElementById("comidas_blancas").textContent = "Pieces eaten by the player of Whites: " + comidasBlancas;
+                eatenWhites++;
+                document.getElementById("comidas_blancas").textContent = "Pieces eaten by the player of Whites: " + eatenWhites;
             }else{
-                comidasNegras++;
-                document.getElementById("comidas_negras").textContent = "Pieces eaten by the player of Blacks: " + comidasNegras;
+                eatenBlacks++;
+                document.getElementById("comidas_negras").textContent = "Pieces eaten by the player of Blacks: " + eatenBlacks;
             }
             
         }
 
-        tablero[filaDestino][columnaDestino] = pieza; 
-        tablero[filaOrigen][columnaOrigen] = null; 
+        chessboard[rowDestination][columnDestination] = piece; 
+        chessboard[rowOrigin][columnOrigin] = null; 
         
-        if (comprobarGanador(turno)){
+        if (checkWinner(turno)){
             alert("Winner: " +  turno);
         }
 
     }else{
-        console.log("Movimiento INVALIDO");
+        console.log("INVALID move");
     }
    
 
-    return resultado;
+    return result;
 }
 
-function comprobarDiagonalArribaDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
-    let j = columnaOrigen + 1;
-    let pasoPorCasilla = false;
+function checkDiagonalUpRight(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
+    let j = columnOrigin + 1;
+    let stepByRank = false;
 
 
-    console.log("Se comprueba...");
-    for (let i = filaOrigen - 1; i >= filaDestino && resultado==true; i--){
-        if (tablero[i][j] != null && tablero[i][j].color == color){
-            resultado = false;
+    console.log("Checking...");
+    for (let i = rowOrigin - 1; i >= rowDestination && result==true; i--){
+        if (chessboard[i][j] != null && chessboard[i][j].color == color){
+            result = false;
         }    
 
-        if (i == filaDestino && j == columnaDestino){
-            pasoPorCasilla = true;
+        if (i == rowDestination && j == columnDestination){
+            stepByRank = true;
         }
 
         j++;
     }
 
-    return resultado && pasoPorCasilla;
+    return result && stepByRank;
 }
 
-function comprobarDiagonalArribaIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
-    let j = columnaOrigen - 1;
-    let pasoPorCasilla = false;
+function checkDiagonalUpLeft(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
+    let j = columnOrigin - 1;
+    let stepByRank = false;
 
 
-    console.log("Se comprueba...");
-    for (let i = filaOrigen - 1; i >= filaDestino && resultado==true; i--){
-        if (tablero[i][j] != null && tablero[i][j].color == color){
-            resultado = false;
+    console.log("Checking...");
+    for (let i = rowOrigin - 1; i >= rowDestination && result==true; i--){
+        if (chessboard[i][j] != null && chessboard[i][j].color == color){
+            result = false;
         }    
 
-        if (i == filaDestino && j == columnaDestino){
-            pasoPorCasilla = true;
+        if (i == rowDestination && j == columnDestination){
+            stepByRank = true;
         }
 
         j--;
     }
 
-    return resultado && pasoPorCasilla;
+    return result && stepByRank;
 }
 
-function comprobarDiagonalAbajoDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
-    let j = columnaOrigen + 1;
-    let pasoPorCasilla = false;
+function checkDiagonalDownRight(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
+    let j = columnOrigin + 1;
+    let stepByRank = false;
    
 
-    console.log("Se comprueba..." + color);
-    for (let i = filaOrigen + 1; i <= filaDestino && resultado==true; i++){
-        if (tablero[i][j] != null && tablero[i][j].color == color){
-            resultado = false;
+    console.log("Checking..." + color);
+    for (let i = rowOrigin + 1; i <= rowDestination && result==true; i++){
+        if (chessboard[i][j] != null && chessboard[i][j].color == color){
+            result = false;
         }
         
-        if (i == filaDestino && j == columnaDestino){
-            pasoPorCasilla = true;
+        if (i == rowDestination && j == columnDestination){
+            stepByRank = true;
         }
 
         j++;
     }
 
-    return resultado && pasoPorCasilla;
+    return result && stepByRank;
 }
 
-function comprobarDiagonalAbajoIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
-    let pasoPorCasilla = false;
+function checkDiagonalDownLeft(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
+    let stepByRank = false;
 
-    let j = columnaOrigen - 1;
+    let j = columnOrigin - 1;
 
-    console.log("Se comprueba..." + color);
-    for (let i = filaOrigen + 1; i <= filaDestino && resultado==true; i++){
-        if (tablero[i][j] != null && tablero[i][j].color == color){
-            resultado = false;
+    console.log("Checking..." + color);
+    for (let i = rowOrigin + 1; i <= rowDestination && result==true; i++){
+        if (chessboard[i][j] != null && chessboard[i][j].color == color){
+            result = false;
         }    
 
-        if (i == filaDestino && j == columnaDestino){
-            pasoPorCasilla = true;
+        if (i == rowDestination && j == columnDestination){
+            stepByRank = true;
         }
 
         j--;
     }
 
-    return resultado && pasoPorCasilla;
+    return result && stepByRank;
 }
 
-function comprobarFilaDerecha(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
+function checkRightRow(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
 
-    for (let j = columnaOrigen + 1; j <= columnaDestino; j++){
-        if (tablero[filaOrigen][j] != null && tablero[filaOrigen][j].color == color){
-            resultado = false;
+    for (let j = columnOrigin + 1; j <= columnDestination; j++){
+        if (chessboard[rowOrigin][j] != null && chessboard[rowOrigin][j].color == color){
+            result = false;
         }
     }
 
-    return resultado;
+    return result;
 }
 
-function comprobarFilaIzquierda(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
+function checkLeftRow(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
 
-    for (let j = columnaOrigen - 1; j >= columnaDestino; j--){
-        if (tablero[filaOrigen][j] != null && tablero[filaOrigen][j].color == color){
-            resultado = false;
+    for (let j = columnOrigin - 1; j >= columnDestination; j--){
+        if (chessboard[rowOrigin][j] != null && chessboard[rowOrigin][j].color == color){
+            result = false;
         }
     }
 
-    return resultado;
+    return result;
 }
 
-function comprobarGanador(color){
-    let resultado = true;
-    let colorOpuesto = null;
+function checkWinner(color){
+    let result = true;
+    let oppositeColor = null;
 
-    console.log("comprobando ganador");
+    console.log("Checking winner");
     if (color == "white"){
-        colorOpuesto = "black";
+        oppositeColor = "black";
     }else{
-        colorOpuesto = "white";
+        oppositeColor = "white";
     }
 
     for (let i = 0; i < ROWS; i++){
         for (let j = 0; j < COLUMNS; j++){
-            if (tablero[i][j] != null && tablero[i][j].color == colorOpuesto && tablero[i][j].pieza == "rey"){
-                resultado = false;
+            if (chessboard[i][j] != null && chessboard[i][j].color == oppositeColor && chessboard[i][j].piece == "rey"){
+                result = false;
             }
         }
     }
 
-    return resultado;
+    return result;
 }
 
-function comprobarColumnaAbajo(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
+function checkDownColumn(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
 
-    for (let i = filaOrigen + 1; i <= filaDestino; i++){
-        if (tablero[i][columnaOrigen] != null && tablero[i][columnaOrigen].color == color){
-            resultado = false;
+    for (let i = rowOrigin + 1; i <= rowDestination; i++){
+        if (chessboard[i][columnOrigin] != null && chessboard[i][columnOrigin].color == color){
+            result = false;
         }
     }
 
-    return resultado;
+    return result;
 }
 
-function comprobarColumnaArriba(filaOrigen, columnaOrigen, filaDestino, columnaDestino, color){
-    let resultado = true;
+function checkUpColumn(rowOrigin, columnOrigin, rowDestination, columnDestination, color){
+    let result = true;
 
-    for (let i = filaOrigen - 1; i >= filaDestino; i--){
-        if (tablero[i][columnaOrigen] != null && tablero[i][columnaOrigen].color == color){
-            resultado = false;
+    for (let i = rowOrigin - 1; i >= rowDestination; i--){
+        if (chessboard[i][columnOrigin] != null && chessboard[i][columnOrigin].color == color){
+            result = false;
         }
     }
 
-    return resultado;
+    return result;
 }
 
 createBoard();
