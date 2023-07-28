@@ -15,14 +15,14 @@ let timerNegras = null;
 let modo = null;
 
 let tablero = [
-                [{pieza:"torre", color:"negro", imagen:"torre_negro"}, {pieza:"caballo", color:"negro", imagen:"caballo_negro"}, {pieza:"alfil", color:"negro", imagen:"alfil_negro"}, {pieza:"reina", color:"negro", imagen:"reina_negro"}, {pieza:"rey", color:"negro", imagen:"rey_negro"}, {pieza:"alfil", color:"negro", imagen:"alfil_negro"}, {pieza:"caballo", color:"negro", imagen:"caballo_negro"}, {pieza:"torre", color:"negro", imagen:"torre_negro"}],
-                [{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"}],
+                [{pieza:"torre", color:"black", imagen:"torre_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"reina", color:"black", imagen:"reina_negro"}, {pieza:"rey", color:"black", imagen:"rey_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"torre", color:"black", imagen:"torre_negro"}],
+                [{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"}],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
                 [null,null,null,null,null,null,null,null],
-                [{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"}],
-                [{pieza:"torre", color:"blanco", imagen:"torre_blanco"}, {pieza:"caballo", color:"blanco", imagen:"caballo_blanco"}, {pieza:"alfil", color:"blanco", imagen:"alfil_blanco"}, {pieza:"reina", color:"blanco", imagen:"reina_blanco"}, {pieza:"rey", color:"blanco", imagen:"rey_blanco"}, {pieza:"alfil", color:"blanco", imagen:"alfil_blanco"}, {pieza:"caballo", color:"blanco", imagen:"caballo_blanco"}, {pieza:"torre", color:"blanco", imagen:"torre_blanco"}]
+                [{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"}],
+                [{pieza:"torre", color:"white", imagen:"torre_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"reina", color:"white", imagen:"reina_blanco"}, {pieza:"rey", color:"white", imagen:"rey_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"torre", color:"white", imagen:"torre_blanco"}]
               ];
 
 
@@ -30,7 +30,7 @@ document.getElementById("turno").textContent = "TURN: " + turno.toUpperCase();
 
 function decrementarTiempoBlancas(){
     tiempoBlancas--;
-    document.getElementById("tiempo_blancas").textContent = "Blancas: " + tiempoBlancas + " segundos";
+    document.getElementById("tiempo_blancas").textContent = "Whites: " + tiempoBlancas + " seconds";
 
     if (tiempoBlancas == 0){
         alert("Winner: Blacks");
@@ -41,7 +41,7 @@ function decrementarTiempoBlancas(){
 
 function decrementarTiempoNegras(){
     tiempoNegras--;
-    document.getElementById("tiempo_negras").textContent = "Negras: "+ tiempoNegras + " segundos";
+    document.getElementById("tiempo_negras").textContent = "Blacks: "+ tiempoNegras + " seconds";
 
     if (tiempoNegras == 0){
         alert("Winner: Whites");
@@ -56,8 +56,8 @@ function partidaContrareloj(){
     restartGame();
     modo = "contrareloj";
     timerBlancas = setInterval(decrementarTiempoBlancas, 1000);
-    document.getElementById("tiempo_negras").textContent =  "Negras: "+ tiempoNegras + " segundos";
-    document.getElementById("tiempo_blancas").textContent =  "Blancas: "+ tiempoBlancas + " segundos";
+    document.getElementById("tiempo_negras").textContent =  "Blacks: "+ tiempoNegras + " seconds";
+    document.getElementById("tiempo_blancas").textContent =  "Whites: "+ tiempoBlancas + " seconds";
 
 }
 
@@ -75,21 +75,21 @@ function restartGame(){
     turno = "white";
 
     tablero = [
-        [{pieza:"torre", color:"negro", imagen:"torre_negro"}, {pieza:"caballo", color:"negro", imagen:"caballo_negro"}, {pieza:"alfil", color:"negro", imagen:"alfil_negro"}, {pieza:"reina", color:"negro", imagen:"reina_negro"}, {pieza:"rey", color:"negro", imagen:"rey_negro"}, {pieza:"alfil", color:"negro", imagen:"alfil_negro"}, {pieza:"caballo", color:"negro", imagen:"caballo_negro"}, {pieza:"torre", color:"negro", imagen:"torre_negro"}],
-        [{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"},{pieza:"peon", color:"negro", imagen:"peon_negro"}],
-        [null,null,null,null,null,null,null,null],
-        [null,null,null,null,null,null,null,null],
-        [null,null,null,null,null,null,null,null],
-        [null,null,null,null,null,null,null,null],
-        [{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"},{pieza:"peon", color:"blanco", imagen:"peon_blanco"}],
-        [{pieza:"torre", color:"blanco", imagen:"torre_blanco"}, {pieza:"caballo", color:"blanco", imagen:"caballo_blanco"}, {pieza:"alfil", color:"blanco", imagen:"alfil_blanco"}, {pieza:"reina", color:"blanco", imagen:"reina_blanco"}, {pieza:"rey", color:"blanco", imagen:"rey_blanco"}, {pieza:"alfil", color:"blanco", imagen:"alfil_blanco"}, {pieza:"caballo", color:"blanco", imagen:"caballo_blanco"}, {pieza:"torre", color:"blanco", imagen:"torre_blanco"}]
-      ];
+        [{pieza:"torre", color:"black", imagen:"torre_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"reina", color:"black", imagen:"reina_negro"}, {pieza:"rey", color:"black", imagen:"rey_negro"}, {pieza:"alfil", color:"black", imagen:"alfil_negro"}, {pieza:"caballo", color:"black", imagen:"caballo_negro"}, {pieza:"torre", color:"black", imagen:"torre_negro"}],
+                [{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"},{pieza:"peon", color:"black", imagen:"peon_negro"}],
+                [null,null,null,null,null,null,null,null],
+                [null,null,null,null,null,null,null,null],
+                [null,null,null,null,null,null,null,null],
+                [null,null,null,null,null,null,null,null],
+                [{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"},{pieza:"peon", color:"white", imagen:"peon_blanco"}],
+                [{pieza:"torre", color:"white", imagen:"torre_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"reina", color:"white", imagen:"reina_blanco"}, {pieza:"rey", color:"white", imagen:"rey_blanco"}, {pieza:"alfil", color:"white", imagen:"alfil_blanco"}, {pieza:"caballo", color:"white", imagen:"caballo_blanco"}, {pieza:"torre", color:"white", imagen:"torre_blanco"}]
+              ];
 
       document.getElementById("turno").textContent = "TURN: " + turno.toUpperCase();
 
       //No es partida contrareloj
-      document.getElementById("tiempo_negras").textContent = "Not an Against the Clock Game.";
-      document.getElementById("tiempo_blancas").textContent = "Not an Against the Clock Game.";
+      document.getElementById("tiempo_negras").textContent = "No es partida contrareloj";
+      document.getElementById("tiempo_blancas").textContent = "No es partida contrareloj";
       
       createBoard();
 
@@ -160,7 +160,7 @@ function resaltarCasilla(event){
 
             if (turno == "white"){
                 turno = "black";
-                //temporizador negro
+                //temporizador black
                 if (modo == "contrareloj"){
                     clearInterval(timerBlancas);
                     //timerBlancas = setInterval(decrementarTiempoBlancas, 1000);
@@ -168,7 +168,7 @@ function resaltarCasilla(event){
                 }
             }else{
                 turno = "white";
-                //temporizador blanco
+                //temporizador white
                 if (modo == "contrareloj"){
                     clearInterval(timerNegras);
                     timerBlancas = setInterval(decrementarTiempoBlancas, 1000);
@@ -249,18 +249,18 @@ function hacerMovimiento(filaDestino, columnaDestino){
     if (pieza.pieza === "peon"){
         //reglas para el peon
         
-        if (pieza.color === "blanco"){
+        if (pieza.color === "white"){
             //Blanco
             if (filaDestino == filaOrigen - 1){
                 resultado =  true;
-            }else if (filaDestino == filaOrigen - 1 && hayPiezaMismoColor(filaDestino, columnaDestino, "negro") && (columnaDestino == columnaOrigen + 1 ||  columnaDestino == columnaOrigen - 1)){
+            }else if (filaDestino == filaOrigen - 1 && hayPiezaMismoColor(filaDestino, columnaDestino, "black") && (columnaDestino == columnaOrigen + 1 ||  columnaDestino == columnaOrigen - 1)){
                 resultado = true;
             }
         }else{
             //Negro
             if (filaDestino == filaOrigen + 1){
                 resultado =  true;
-            }else if (filaDestino == filaOrigen + 1 && hayPiezaMismoColor(filaDestino, columnaDestino, "blanco") && (columnaDestino == columnaOrigen + 1 ||  columnaDestino == columnaOrigen - 1)){
+            }else if (filaDestino == filaOrigen + 1 && hayPiezaMismoColor(filaDestino, columnaDestino, "white") && (columnaDestino == columnaOrigen + 1 ||  columnaDestino == columnaOrigen - 1)){
                 resultado = true;
             }
         }
@@ -345,12 +345,12 @@ function hacerMovimiento(filaDestino, columnaDestino){
 
             
             
-            if (turno == "blanco"){
+            if (turno == "white"){
                 comidasBlancas++;
-                document.getElementById("comidas_blancas").textContent = "Piezas Comidas Jugador Blancas: " + comidasBlancas;
+                document.getElementById("comidas_blancas").textContent = "Pieces eaten by the player of Whites: " + comidasBlancas;
             }else{
                 comidasNegras++;
-                document.getElementById("comidas_negras").textContent = "Piezas Comidas Jugador Negras: " + comidasNegras;
+                document.getElementById("comidas_negras").textContent = "Pieces eaten by the player of Blacks: " + comidasNegras;
             }
             
         }
@@ -487,10 +487,10 @@ function comprobarGanador(color){
     let colorOpuesto = null;
 
     console.log("comprobando ganador");
-    if (color == "blanco"){
-        colorOpuesto = "negro";
+    if (color == "white"){
+        colorOpuesto = "black";
     }else{
-        colorOpuesto = "blanco";
+        colorOpuesto = "white";
     }
 
     for (let i = 0; i < ROWS; i++){
