@@ -22,7 +22,7 @@ td{
     background-color: #ffce9e;
 }
 
-.casilla_resaltada{
+.highlighted_rank{
     background-color: yellow;
 }
 
@@ -34,7 +34,7 @@ td{
     gap: 50px;
 }
 
-#turno{
+#turn{
     font-size: 24pt;
     font-weight: bold;
 }
